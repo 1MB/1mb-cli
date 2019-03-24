@@ -1,0 +1,56 @@
+{
+  "name": "1mb-cli",
+  "description": "Quickly deploy static content to 1MB's free static hosting service",
+  "version": "1.0.0",
+  "author": "Jake Casto",
+  "bin": {
+    "1mb": "./bin/run"
+  },
+  "bugs": "https://github.com/https://github.com/1mbsite/1mb-cli/issues",
+  "dependencies": {
+    "@oclif/command": "^1.5.12",
+    "@oclif/config": "^1.12.11",
+    "@oclif/plugin-help": "^2.1.6",
+    "cli-ux": "^5.2.1",
+    "configstore": "^4.0.0",
+    "glob-gitignore": "^1.0.14",
+    "minify": "^4.1.1",
+    "node-notifier": "^5.4.0",
+    "parse-gitignore": "^1.0.1",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.21.3",
+    "globby": "^8.0.2",
+    "rimraf": "^2.6.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/src"
+  ],
+  "homepage": "https://github.com/1mbsite/1mb-cli",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "1mb",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "https://github.com/1mbsite/1mb-cli",
+  "scripts": {
+    "postpack": "rimraf oclif.manifest.json",
+    "prepack": "oclif-dev manifest && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md"
+  }
+}
