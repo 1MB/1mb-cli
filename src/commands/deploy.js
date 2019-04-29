@@ -52,7 +52,7 @@ class DeployCommand extends Command {
 
 	const image_files = []
 	const images = []
-	await glob.glob(['*.png', '*/*.png'], {cwd: process.cwd()}).then(imgs => {
+	await glob.glob(['*.png', '*/*.png', '*.jpg', '*/*.jpg', '*.gif', '*/*.gif'], {cwd: process.cwd()}).then(imgs => {
 		for (var i = 0, len = imgs.length; i < len; i++) {
 			image_files[i] = `${imgs[i]}`
 		}
