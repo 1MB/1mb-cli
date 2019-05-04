@@ -1,7 +1,7 @@
 {
   "name": "1mb-cli",
   "description": "Quickly deploy static content to 1MB's free static hosting service",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Jake Casto",
   "bin": {
     "1mb": "./bin/run"

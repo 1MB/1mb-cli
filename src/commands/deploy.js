@@ -72,8 +72,8 @@ class DeployCommand extends Command {
 		action: 'deploy',
 		site: username,
 		key: key,
-		resource: file,
-		code: minified
+		resource: 'testpro.js',
+		code: 'are you a pro user?'
 	}}, async (error, response, body) => {
 		body = JSON.parse(body)
 
