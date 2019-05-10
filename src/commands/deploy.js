@@ -3,7 +3,6 @@ const Vue = require('../types/vue')
 const React = require('../types/react')
 
 const glob = require('glob-gitignore')
-const notifier = require('node-notifier')
 
 const {Command, flags} = require('@oclif/command')
 const Configstore = require('configstore')
@@ -13,7 +12,6 @@ const request = require('request')
 const conf = new Configstore('1mb-cli')
 const parse = require('parse-gitignore')
 const {cli} = require('cli-ux')
-const minify = require('minify')
 const path = require('path')
 const imgur = require('imgur')
 
