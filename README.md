@@ -13,7 +13,7 @@ Or you can download the latest tarball from the Releases page.
 
 ## Usage
 
-Cd into your websites directory and run `1mb-cli deploy`. It will prompt you for your account username and api key and ask you if you'd like to cache them. It accepts the `--minify` parameter to autominify resources and the `--clearcreds` param to clear saved credentials.
+Cd into your websites directory and run `1mb-cli deploy`. It will prompt you for your account username and api key and ask you if you'd like to cache them.
 
 ## Upgrade Guide
 
@@ -33,3 +33,4 @@ Note: The upgrade command will not work if you are using a tarball.
 | `--vuejs` | Auto build and deploy a React application. Note: you must be in the root directory of your application |
 | `--reactjs` | Auto build and deploy a React application. Note: you must be in the root directory of your application |
 | `--minify` | Minify all HTML/CSS/JS files. Note: This flag is useless if the `--vuejs` or `--reactjs` flags are used with it |
+| `--clearcreds` | Clear saved credentials and reauthenticate |
