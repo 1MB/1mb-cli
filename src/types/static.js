@@ -1,6 +1,7 @@
 const glob = require('glob-gitignore')
 const fs = require('fs')
 const path = require('path')
+const minify_func = require('minify')
 
 class Static {
 
@@ -8,7 +9,7 @@ class Static {
 		this.directory = directory
 		this.ignore = ignore
 		this.log = log
-		this.minify = true;
+		this.minify = minify;
 	}
 
 	async files () {
@@ -20,7 +21,7 @@ class Static {
 			for (var i = files.length - 1; i >= 0; i--) {
 				files[i] = {
 					name: path.basename(files[i]),
-					contents: self.minify ? minify(`${self.directory}/${files[i]}`) : fs.readFileSync(`${process.cwd()}/dist/${files[i]}`, 'utf8')
+					contents: self.minify ? minify_func(`${self.directory}/${files[i]}`) : fs.readFileSync(`${process.cwd()}/dist/${files[i]}`, 'utf8')
 				}
 			}
 
