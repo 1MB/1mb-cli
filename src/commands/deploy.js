@@ -49,11 +49,9 @@ class DeployCommand extends Command {
             // clear all active resources
             request.post('https://api.1mb.site', {
                 form: {
-                    action: 'deploy',
+                    action: 'resources',
                     site: username,
-                    key: key,
-                    resource: file,
-                    code: content
+                    key: key
                 }
             }, function(error, response, body) {
                 body = JSON.parse(body)
@@ -198,11 +196,9 @@ class DeployCommand extends Command {
                 if(flags.vuejs) {
                 	// fix images with vue
                 	content = await content.split(`r.p+"img/${path.basename(images[n]['path'])}`).join(`"${images[n]['url']}`)
+                    content = await content.split('r.p+').join('')
                 }
             }
-
-            // fix vue
-            content = await content.split('r.p+').join('')
 
             request.post('https://api.1mb.site', {
                 form: {
