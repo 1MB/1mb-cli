@@ -1,5 +1,6 @@
 const Static = require('../types/static')
 const Vue = require('../types/vue')
+const React = require('../types/react')
 
 const glob = require('glob-gitignore')
 const notifier = require('node-notifier')
@@ -98,13 +99,29 @@ class DeployCommand extends Command {
         //     }
         // })
 
+        // ignore npm files
+        let ignore = [
+        	'package.json',
+        	'package-lock.json'
+        ]
+
         let type
         if(flags.vuejs) {
-        	this.log('Building...')
+        	this.log('Building vue...')
 
         	type = new Vue(
         		process.cwd(),
-        		fs.existsSync(`${process.cwd()}/.gitignore`) ? parse(fs.readFileSync(`${process.cwd()}/.gitignore`)) : [],
+        		fs.existsSync(`${process.cwd()}/.gitignore`) ? parse(fs.readFileSync(`${process.cwd()}/.gitignore`)).concat(ignore) : ignore,
+        		this,
+        		flags.minify
+        	)
+        }
+        else if(flags.reactjs) {
+        	this.log('Building react...')
+
+        	type = new React(
+        		process.cwd(),
+        		fs.existsSync(`${process.cwd()}/.gitignore`) ? parse(fs.readFileSync(`${process.cwd()}/.gitignore`)).concat(ignore) : ignore,
         		this,
         		flags.minify
         	)
@@ -112,15 +129,23 @@ class DeployCommand extends Command {
         else {
         	type = new Static(
         		process.cwd(),
-        		fs.existsSync(`${process.cwd()}/.gitignore`) ? parse(fs.readFileSync(`${process.cwd()}/.gitignore`)) : [],
+        		fs.existsSync(`${process.cwd()}/.gitignore`) ? parse(fs.readFileSync(`${process.cwd()}/.gitignore`)).concat(ignore) : ignore,
         		this,
         		flags.minify
         	)
         }
 
         let files = await type.files()
-        let cwd = flags.vuejs ? process.cwd() + '/dist/' : process.cwd()
-        self.log(cwd)
+        let cwd;
+        if(flags.vuejs) {
+        	cwd = process.cwd() + '/dist/'
+        }
+        else if(flags.reactjs) {
+        	cwd = process.cwd() + '/build/'
+        }
+        else {
+        	cwd = process.cwd();
+        }
 
         let image_files = []
         let images = []
@@ -229,7 +254,10 @@ DeployCommand.flags = {
         description: 'Clear cached 1mbsite credentials and reauthenticate'
     }),
     vuejs: flags.boolean({
-        description: ''
+        description: 'Automatically build and deploy a VueJS application'
+    }),
+    reactjs: flags.boolean({
+        description: 'Automatically build and deploy a VueJS application'
     })
 }
 
