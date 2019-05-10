@@ -45,57 +45,66 @@ class DeployCommand extends Command {
             }
         }
 
-        // clear all active resources | waiting for dalton to finish this api
-        // request.post('https://api.1mb.site', {
-        //     form: {
-        //         action: 'deploy',
-        //         site: username,
-        //         key: key,
-        //         resource: file,
-        //         code: content
-        //     }
-        // }, function(error, response, body) {
-        //     body = JSON.parse(body)
+        if(flags.clear_files || flags.vuejs || flags.reactjs) {
+            // clear all active resources
+            request.post('https://api.1mb.site', {
+                form: {
+                    action: 'deploy',
+                    site: username,
+                    key: key,
+                    resource: file,
+                    code: content
+                }
+            }, function(error, response, body) {
+                body = JSON.parse(body)
 
-        //     if (body.error) {
-        //         switch (body.error) {
-        //             case 'ACCOUNT_BANNED':
-        //                 cli.action.stop('ERROR: Account banned.');
-        //                 break;
-        //             case 'ACCOUNT_NONEXISTENT':
-        //                 cli.action.stop('ERROR: Account doesn\'t exist.');
-        //                 break;
-        //             case 'STORAGE_QUOTA':
-        //                 cli.action.stop('ERROR: Account storage depleted.');
-        //                 break;
-        //             case 'KEY_INCORRECT':
-        //                 cli.action.stop('ERROR: Bad site key.');
-        //                 break;
-        //             case 'EMAIL_VERIFICATION':
-        //                 cli.action.stop('ERROR: Email not verified.');
-        //                 break;
-        //             case 'KEY_INCLUDED':
-        //                 cli.action.stop('ERROR: Site key found in code.');
-        //                 break;
-        //             case 'RESOURCE_INVALID':
-        //                 cli.action.stop('ERROR: Invalid file name.');
-        //                 break;
-        //             case 'EXTENSION_INVALID':
-        //                 cli.action.stop('ERROR: Unsupported file name extension.');
-        //                 break;
-        //             case 'RESOURCE_LONG':
-        //                 cli.action.stop('ERROR: File name too long.');
-        //                 break;
-        //         }
-        //     }
+                if (body.error) {
+                    switch (body.error) {
+                        case 'ACCOUNT_BANNED':
+                            this.log('ERROR: Account banned.');
+                            break;
+                        case 'ACCOUNT_NONEXISTENT':
+                            this.log('ERROR: Account doesn\'t exist.');
+                            break;
+                        case 'STORAGE_QUOTA':
+                            this.log('ERROR: Account storage depleted.');
+                            break;
+                        case 'KEY_INCORRECT':
+                            this.log('ERROR: Bad site key.');
+                            break;
+                        case 'EMAIL_VERIFICATION':
+                            this.log('ERROR: Email not verified.');
+                            break;
+                        case 'KEY_INCLUDED':
+                            this.log('ERROR: Site key found in code.');
+                            break;
+                        case 'RESOURCE_INVALID':
+                            this.log('ERROR: Invalid file name.');
+                            break;
+                        case 'EXTENSION_INVALID':
+                            this.log('ERROR: Unsupported file name extension.');
+                            break;
+                        case 'RESOURCE_LONG':
+                            this.log('ERROR: File name too long.');
+                            break;
+                    }
+                }
 
-        //     let file;
-        //     for (var i = body.data.length - 1; i >= 0; i--) {
-        //     	file = body.data[i]
+                let file;
+                for (var i = body.data.length - 1; i >= 0; i--) {
+                	file = body.data[i]
 
-        //     	// TODO: DELETE FILE
-        //     }
-        // })
+                    request.post('https://api.1mb.site', {
+                        form: {
+                            action: 'delete-resource',
+                            site: username,
+                            api_key: key,
+                            resource: path.basename(file)
+                        }}, function(error, response, body) {}
+                    );
+                }
+            })
+        }
 
         // ignore npm files
         let ignore = [
@@ -246,16 +255,19 @@ DeployCommand.description = `Deploy your files to 1mbsite`
 
 DeployCommand.flags = {
     minify: flags.boolean({
-        description: 'Minify all resources before pushing to 1mbsite'
+        description: 'Minify all resources before pushing to 1MB'
     }),
     clearcreds: flags.boolean({
-        description: 'Clear cached 1mbsite credentials and reauthenticate'
+        description: 'Clear cached 1MB credentials and reauthenticate'
     }),
     vuejs: flags.boolean({
         description: 'Automatically build and deploy a VueJS application'
     }),
     reactjs: flags.boolean({
         description: 'Automatically build and deploy a VueJS application'
+    }),
+    clear_files: flags.boolean({
+        description: 'Clear all site resources currently on 1MB before deploying'
     })
 }
 

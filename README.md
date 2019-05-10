@@ -34,3 +34,4 @@ Note: The upgrade command will not work if you are using a tarball.
 | `--reactjs` | Auto build and deploy a React application. Note: you must be in the root directory of your application |
 | `--minify` | Minify all HTML/CSS/JS files. Note: This flag is useless if the `--vuejs` or `--reactjs` flags are used with it |
 | `--clearcreds` | Clear saved credentials and reauthenticate |
+| `--clear-files` | Clear all site resources currently on 1MB before deploying. Note: this param doesn't do anything when mixe with `--vuejs` or `--reactjs` because those params delete all resources. |
