@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "author": "Jake Casto",
     "bin": {
-        "1mb": "./bin/run"
+        "1mb-cli": "./bin/run"
     },
     "bugs": "https://github.com/https://github.com/1mbsite/1mb-cli/issues",
     "dependencies": {
