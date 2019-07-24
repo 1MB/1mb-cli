@@ -186,7 +186,7 @@ class DeployCommand extends Command {
         for (var i = files.length - 1; i >= 0; i--) {
         	file = files[i]
 
-        	content = file['contents']
+        	content = await file['contents']
         	name = file['name']
 
         	// replace image links
