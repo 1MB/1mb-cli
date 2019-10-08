@@ -21,7 +21,7 @@ class Static {
 			for (var i = files.length - 1; i >= 0; i--) {
 				files[i] = {
 					name: path.basename(files[i]),
-					contents: self.minify ? minify_func(`${self.directory}/${files[i]}`) : fs.readFileSync(`${process.cwd()}/${files[i]}`, 'utf8')
+					contents: (self.minify && (fs.statSync(`${process.cwd()}/${files[i]}`))["size"] > 0) ? minify_func(`${self.directory}/${files[i]}`) : fs.readFileSync(`${process.cwd()}/${files[i]}`, 'utf8')
 				}
 			}
 
